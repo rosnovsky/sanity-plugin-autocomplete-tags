@@ -7,6 +7,7 @@ import PatchEvent, {set, unset} from 'part:@sanity/form-builder/patch-event'
 import {withDocument} from 'part:@sanity/form-builder'
 
 import styles from './autocompleteTagsComponent.css'
+import { stringify } from 'querystring';
 
 const client = sanityClient({
   projectId: process.env.SANITY_PROJECT_ID, // TODO: How do I make users configure this inside the Studio?..
@@ -26,13 +27,13 @@ const autocompleteTagsComponent = (props) => {
   useEffect(() => {
     // Component is loading! Hands off!
     setIsLoading(true)
-    const query = '*[_type == "photo"] {photo}' // TODO: Can I turn it itno a variable to make it work with user defined or "parent" document instead of hardcoding "photo" as a search term?
+    const query: string = '*[_type == "photo"] {photo}' // TODO: Can I turn it itno a variable to make it work with user defined or "parent" document instead of hardcoding "photo" as a search term?
 
     // TODO: Implement .focus() mentod
 
-    const fetchTags = async () =>  {
-      const allTags = []
-      const result = client.fetch(query)
+    const fetchTags = async (): void =>  {
+      const allTags: Record<string, string>[] = []
+      client.fetch(query)
       .then(photos => {
         const fillTags = photos.forEach(photo => {
           allTags.push(photo.photo.tags)
@@ -54,7 +55,6 @@ const autocompleteTagsComponent = (props) => {
         setUniqueImageTags(uniqueTags)
         return fillTags;
       })
-      return result
     }
   
     // Ok, now let's populate the dropdown with tags already assigned.

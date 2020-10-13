@@ -2,7 +2,7 @@
   "parts": [
     {
       "implements": "part:@sanity/base/tool",
-      "path": "./index.js"
+      "path": "./autocomplete-tags/index.js"
     }
   ]
 }
