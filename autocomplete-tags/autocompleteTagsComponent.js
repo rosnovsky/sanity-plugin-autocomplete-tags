@@ -9,7 +9,7 @@ import {withDocument} from 'part:@sanity/form-builder'
 import styles from './autocompleteTagsComponent.css'
 
 const client = sanityClient({
-  projectId: 'process.env.SANITY_PROJECT_ID', // TODO: How do I make users configure this inside the Studio?..
+  projectId: process.env.SANITY_PROJECT_ID, // TODO: How do I make users configure this inside the Studio?..
   dataset: 'production',
   token: process.env.SANITY_TOKEN, // TODO: Same question as above
   useCdn: false // important to set to `false`: we need our tags fresh
