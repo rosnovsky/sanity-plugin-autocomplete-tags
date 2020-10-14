@@ -7,6 +7,12 @@
   "keywords": [
     "sanity", "sanity studio", "sanity plugin", "react-select", "autocomplete"
   ],
+  "main": "build/index.js",
+  "scripts": {
+    "build": "babel src -d build --copy-files",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "npm run build"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/rosnovsky/sanity-plugin-autocomplete-tags"
