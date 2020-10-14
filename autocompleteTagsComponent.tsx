@@ -7,7 +7,21 @@ import PatchEvent, {set, unset} from 'part:@sanity/form-builder/patch-event'
 import {withDocument} from 'part:@sanity/form-builder'
 
 import styles from './autocompleteTagsComponent.css'
-import { stringify } from 'querystring';
+
+export const tagSchema = { 
+  type: "object", 
+  name: "tag", 
+  fields: [
+    {
+      name: "value",
+      type: "string"
+    },
+    {
+      name: "label",
+      type: "string"
+    }
+  ]
+}
 
 const client = sanityClient({
   projectId: process.env.SANITY_PROJECT_ID, // TODO: How do I make users configure this inside the Studio?..

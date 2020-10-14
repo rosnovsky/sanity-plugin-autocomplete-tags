@@ -1,4 +1,6 @@
-export default { 
+import autocompleteTagsComponent from './autocompleteTagsComponent'
+
+export const schema = { 
   type: "object", 
   name: "tag", 
   fields: [
@@ -12,3 +14,5 @@ export default {
     }
   ]
 }
+
+export default autocompleteTagsComponent;
