@@ -1,8 +1,21 @@
 {
   "parts": [
     {
-      "implements": "part:@sanity/base/tool",
-      "path": "./autocomplete-tags/index.js"
+      "name": "part:sanity-plugin-autocomplete-tags",
+      "description": "React component which provides a slider input"
+    },
+    {
+      "implements": "part:sanity-plugin-autocomplete-tags",
+      "path": "autocompleteTagsComponent.js"
+    },
+    {
+      "implements": "part:@sanity/base/schema-type",
+      "path": "schema/tagSchema.js"
+    },
+    {
+      "implements": "part:@sanity/base/schema-type",
+      "path": "schema/inputSchema.js"
     }
   ]
 }
+
