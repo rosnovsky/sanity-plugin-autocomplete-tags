@@ -41,12 +41,12 @@ const autocompleteTagsComponent = (props) => {
   useEffect(() => {
     // Component is loading! Hands off!
     setIsLoading(true)
-    const query: string = '*[_type == "photo"] {photo}' // TODO: Can I turn it itno a variable to make it work with user defined or "parent" document instead of hardcoding "photo" as a search term?
+    const query = '*[_type == "photo"] {photo}' // TODO: Can I turn it itno a variable to make it work with user defined or "parent" document instead of hardcoding "photo" as a search term?
 
     // TODO: Implement .focus() mentod
 
-    const fetchTags = async (): void =>  {
-      const allTags: Record<string, string>[] = []
+    const fetchTags = async () =>  {
+      const allTags = []
       client.fetch(query)
       .then(photos => {
         const fillTags = photos.forEach(photo => {
