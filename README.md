@@ -10,7 +10,7 @@ This plugin is easy to use and set up.
 
 ### Installation
 
-```shell
+```bash
 sanity install sanity-studio-autocomplete-tags
 ```
 
@@ -24,7 +24,7 @@ None 💃
 
 Whenever you want to add tags to an item in your schema, just add this snippet
 
-```json
+```javascript
 {
   name: 'tags',
   title: 'Tags',
