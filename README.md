@@ -10,7 +10,7 @@ This plugin is easy to use and set up.
 
 ### Installation
 
-```sh
+```shell
 sanity install sanity-studio-autocomplete-tags
 ```
 
@@ -18,26 +18,17 @@ That'll do it. Easy, eh? ;)
 
 ### Configuration
 
-Since this plugin requires writing permissions to Sanity, we need to configure it.
-
-You'd need two self-explanatory environment variables to make it work: `SANITY_PROJECT_ID` and `SANITY_TOKEN`. Please note that the token should be of "Read and Write" kind. More on this [here](https://www.sanity.io/docs/http-auth#robot-tokens-504058b73b71)
+None 💃
 
 ### Implementation
 
 Whenever you want to add tags to an item in your schema, just add this snippet
 
-```js
+```json
 {
   name: 'tags',
   title: 'Tags',
-  type: 'array',
-  description: 'Add tags that describe this photo.',
-  inputComponent: sanityTagAutocomplete,
-  of:[{type: "tag"}],
-  options: {
-    layout: "tags",
-    isHighlighted: true,
-  }
+  type: 'tags',
 }
 ```
 
