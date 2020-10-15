@@ -2,11 +2,21 @@
   "name": "sanity-plugin-autocomplete-tags",
   "license": "MIT",
   "description": "Tags autocomplete plugin for Sanity Studio",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "author": "Art Rosnovsky <artem@rosnovsky.us>",
   "keywords": [
-    "sanity", "sanity studio", "sanity plugin", "react-select", "autocomplete"
+    "sanity",
+    "sanity studio",
+    "sanity plugin",
+    "react-select",
+    "autocomplete"
   ],
+  "main": "build/index.js",
+  "scripts": {
+    "build": "babel src -d build --copy-files",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "npm run build"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/rosnovsky/sanity-plugin-autocomplete-tags"
@@ -15,9 +25,30 @@
     "url": "https://github.com/rosnovsky/sanity-plugin-autocomplete-tags/issues"
   },
   "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.10.4",
+    "@babel/runtime": "^7.6.2",
     "@sanity/client": "^2.0.1",
     "react": "^16.13.1",
-    "react-select": "^3.1.0"
+    "react-select": "^3.1.0",
+    "webpack": "^5.1.0"
   },
-  "publishConfig": { "registry": "https://registry.npmjs.org/" }
+  "devDependencies": {
+    "@babel/cli": "^7.6.3",
+    "@babel/core": "^7.6.3",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^9.0.0",
+    "dotenv": "^8.2.0"
+  },
+  "peerDependencies": {
+    "@sanity/base": ">= 0.135.x",
+    "@sanity/client": ">= 0.135.x",
+    "@sanity/components": ">= 0.135.x",
+    "@sanity/core": ">= 0.135.x"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
 }
