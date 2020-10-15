@@ -1,4 +1,8 @@
 {
+  "paths": {
+    "source": "./src",
+    "compiled": "./build"
+  },
   "parts": [
     {
       "name": "part:sanity-plugin-autocomplete-tags/autocompleteTagsComponent",
@@ -6,7 +10,7 @@
     },
     {
       "implements": "part:sanity-plugin-autocomplete-tags/autocompleteTagsComponent",
-      "path": "autocompleteTagsComponent.js"
+      "path": "components/autocompleteTagsComponent.js"
     },
     {
       "implements": "part:@sanity/base/schema-type",
