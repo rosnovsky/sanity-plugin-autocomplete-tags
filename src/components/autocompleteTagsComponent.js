@@ -19,23 +19,30 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
   const [isLoading, setIsLoading] = useState(false)
   const [selected, setSelected] = useState([])
 
+  console.log(props)
+
   useImperativeHandle(ref, () => ({
     focus() {
       this._inputElement.focus()
     }
   }))
+
+  const document = props.document._type
+
   // On component load, let's fetch all tags from all images and only keep unique ones
   useEffect(() => {
     // Component is loading! Hands off!
     setIsLoading(true)
-    const query = '*[_type == "photo"] {photo}' // TODO: Can I turn it itno a variable to make it work with user defined or "parent" document instead of hardcoding "photo" as a search term?
+    const query = `*[_type == "${document}"] {${document}}` // TODO: Can I turn it itno a variable to make it work with user defined or "parent" document instead of hardcoding "photo" as a search term?
+
+    console.log(query)
 
     const fetchTags = async () => {
       const allTags = []
-      client.fetch(query).then((photos) => {
-        const fillTags = photos.forEach((photo) => {
-          if (photo.photo.tags !== null) {
-            allTags.push(photo.photo.tags)
+      client.fetch(query).then((items) => {
+        const fillTags = items.forEach((item) => {
+          if (item[document].tags !== null) {
+            allTags.push(item[document].tags)
           }
         })
 
@@ -68,7 +75,7 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
       // populating existing tags from document props (this is why we need to set CDN to `false`: to make sure props have fresh set of tags)
 
       // let's make sure selected !== null and is always an array
-      setSelected(!props.document.photo.tags ? [] : props.document.photo.tags)
+      setSelected(!props.value ? [] : props.value)
     }
     fetchTags()
     setSelectedTags()
@@ -95,8 +102,8 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
     // New tags need to be commited to Sanity so that we can reuse them elsewhere
     client
       .patch(props.document._id)
-      .setIfMissing({ photo: { tags: [] } })
-      .append("photo", [{ value: inputValue, label: inputValue }])
+      .setIfMissing({ [document]: { tags: [] } })
+      .append(document, [{ value: inputValue, label: inputValue }])
       .commit()
       .then(() => props.onChange(createPatchFrom(newSelected)))
   }
