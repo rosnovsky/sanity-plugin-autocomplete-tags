@@ -1,14 +1,14 @@
-import sanityTagAutocomplete from '../components/autocompleteTagsComponent'
+import sanityTagAutocomplete from "../components/autocompleteTagsComponent"
 
 export default {
-  name: 'tags',
-  title: 'Tags',
-  type: 'array',
-  description: 'Add your tags.',
+  name: "tags",
+  title: "Tags",
+  type: "array",
+  description: "Add your tags.",
   inputComponent: sanityTagAutocomplete,
-  of:[{type: "tag"}],
+  of: [{ type: "tag" }],
   options: {
     layout: "tags",
-    isHighlighted: true,
+    isHighlighted: true
   }
 }

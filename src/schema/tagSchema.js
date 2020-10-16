@@ -1,6 +1,7 @@
-export default { 
-  type: "object", 
-  name: "tag", 
+export default {
+  title: "Tag",
+  type: "object",
+  name: "tag",
   fields: [
     {
       name: "value",

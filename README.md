@@ -6,12 +6,16 @@ This plugin creates a custom tags input field for Sanity Studio. This custom inp
 
 ## How To Use
 
-This plugin is easy to use and set up.
+This plugin is easy to use and set up. All you need is to have Sanity installed, and its folder open in your terminal.
+
+## Current Limitations
+
+At this time, this plugin only works with `photos` document type. I'm working on fixing this right now.
 
 ### Installation
 
 ```bash
-sanity install sanity-studio-autocomplete-tags
+sanity install autocomplete-tags
 ```
 
 That'll do it. Easy, eh? ;)
@@ -33,3 +37,11 @@ Whenever you want to add tags to an item in your schema, just add this snippet
 ```
 
 Yep, that's it.
+
+## Contribute
+
+This repo is friendly to beginners and there are some awesome and easy wins available for your first PR. Feel free to install this plugin, poke around and improve it in any way you see feet. Open an issue, pick an existing one, or open a PR right away. Reach out for help, I'd be happy to walk you through your first PR!
+
+## Acknowledgements
+
+This plugin is based on React Select, a fantastic select library for React.

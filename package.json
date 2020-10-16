@@ -2,7 +2,7 @@
   "name": "sanity-plugin-autocomplete-tags",
   "license": "MIT",
   "description": "Tags autocomplete plugin for Sanity Studio",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Art Rosnovsky <artem@rosnovsky.us>",
   "keywords": [
     "sanity",

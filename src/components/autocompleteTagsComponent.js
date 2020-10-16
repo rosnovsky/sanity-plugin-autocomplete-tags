@@ -30,38 +30,45 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
     setIsLoading(true)
     const query = '*[_type == "photo"] {photo}' // TODO: Can I turn it itno a variable to make it work with user defined or "parent" document instead of hardcoding "photo" as a search term?
 
-    // TODO: Implement .focus() mentod
-
     const fetchTags = async () => {
       const allTags = []
       client.fetch(query).then((photos) => {
         const fillTags = photos.forEach((photo) => {
-          allTags.push(photo.photo.tags)
+          if (photo.photo.tags !== null) {
+            allTags.push(photo.photo.tags)
+          }
         })
 
         // At this point, we have an array of arrays. Let's flatten this sucker!
         // @ts-ignore
-        const flatTags = allTags.flat()
-
-        // Now, let's create a new array that only includes unique tags
-        const uniqueTags = Array.from(
-          new Set(flatTags.map((tag) => tag.value))
-        ).map((tagValue) => {
-          return {
-            value: tagValue,
-            label: tagValue
+        const flatTags = allTags.flat().filter((tag) => {
+          if (typeof tag !== "string") {
+            return tag
           }
         })
+        // Now, let's create a new array that only includes unique tags
+        const uniqueTags = []
+        const map = new Map()
+        for (const tag of flatTags) {
+          if (!map.has(tag.value)) {
+            map.set(tag.value, true)
+            uniqueTags.push({
+              value: tag.value,
+              label: tag.label
+            })
+          }
+        }
 
         setUniqueImageTags(uniqueTags)
-        return fillTags
       })
     }
 
     // Ok, now let's populate the dropdown with tags already assigned.
     const setSelectedTags = async () => {
       // populating existing tags from document props (this is why we need to set CDN to `false`: to make sure props have fresh set of tags)
-      setSelected(props.document.photo.tags)
+
+      // let's make sure selected !== null and is always an array
+      setSelected(!props.document.photo.tags ? [] : props.document.photo.tags)
     }
     fetchTags()
     setSelectedTags()
@@ -71,33 +78,27 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
   }, [])
 
   // Here we handle change to the tags when this change does not involve creating a new tag
-  const handleChange = (newValue) => {
-    setSelected(newValue)
-    props.onChange(createPatchFrom(newValue))
+  const handleChange = (value) => {
+    // again, ensuring that `selected` remains an array
+    setSelected(!value ? [] : value)
+    props.onChange(createPatchFrom(value))
   }
 
-  // Ok, here's some fun: here we handle changes that involve creating new tags and
-  // populating these new options into selected tags and all tags
-  const createOption = (newValue) => {
-    const newSelected = selected
-    newSelected.push({ value: newValue, label: newValue })
+  /* 
+  Ok, here's some fun: here we handle changes that involve creating new tags and populating these new options into selected tags and all tags
+  */
+  const createOption = (inputValue) => {
+    let newSelected = selected
+    newSelected.push({ value: inputValue, label: inputValue })
     setSelected(newSelected)
 
-    /* 
-    
-    !!! BUG: Sometimes newly added tags don't count towards validation rule.
-    This validation would fail in case the second required tag was just created:
-    
-    validation: Rule => Rule.required().min(2).error('At least 2 tags are required.')
-    
-    */
-
     // New tags need to be commited to Sanity so that we can reuse them elsewhere
-    return client
+    client
       .patch(props.document._id)
-      .setIfMissing({ photo: { tags: [] } }) // shouldn't be a factor, but who knows? 🤷
-      .append("photo", [{ value: newValue, label: newValue }])
+      .setIfMissing({ photo: { tags: [] } })
+      .append("photo", [{ value: inputValue, label: inputValue }])
       .commit()
+      .then(() => props.onChange(createPatchFrom(newSelected)))
   }
 
   return (
@@ -106,7 +107,7 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
       <CreatableSelect
         disabled={isLoading}
         isLoading={isLoading}
-        value={selected || ""}
+        value={selected ? selected : []}
         isMulti
         onChange={handleChange}
         onCreateOption={createOption}
