@@ -8,10 +8,6 @@ This plugin creates a custom tags input field for Sanity Studio. This custom inp
 
 This plugin is easy to use and set up. All you need is to have Sanity installed, and its folder open in your terminal.
 
-## Current Limitations
-
-At this time, this plugin only works with `photos` document type. I'm working on fixing this right now.
-
 ### Installation
 
 ```bash
