@@ -11,44 +11,46 @@ import PatchEvent, { set, unset } from "part:@sanity/form-builder/patch-event"
 import { withDocument } from "part:@sanity/form-builder"
 import client from "part:@sanity/base/client"
 
-const createPatchFrom = (value) =>
+const createPatchFrom = value =>
   PatchEvent.from(value === "" ? unset() : set(value))
 
 const autocompleteTagsComponent = forwardRef((props, ref) => {
-  const [uniqueImageTags, setUniqueImageTags] = useState([])
+  const [uniqueTags, setUniqueTags] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [selected, setSelected] = useState([])
 
-  console.log(props)
-
+  // TODO: This doesn't work, obviously :( Gotta fix it
   useImperativeHandle(ref, () => ({
     focus() {
       this._inputElement.focus()
     }
   }))
 
+  // We'll use this document type later to query and patch it
   const document = props.document._type
 
   // On component load, let's fetch all tags from all images and only keep unique ones
   useEffect(() => {
     // Component is loading! Hands off!
     setIsLoading(true)
-    const query = `*[_type == "${document}"] {${document}}` // TODO: Can I turn it itno a variable to make it work with user defined or "parent" document instead of hardcoding "photo" as a search term?
 
-    console.log(query)
+    // Query for the document type and return the whole thing
+    const query = `*[_type == '${document}'] { ... }`
 
     const fetchTags = async () => {
       const allTags = []
-      client.fetch(query).then((items) => {
-        const fillTags = items.forEach((item) => {
-          if (item[document].tags !== null) {
-            allTags.push(item[document].tags)
+      client.fetch(query).then(items => {
+        items.forEach(item => {
+          if (item.tags && item.tags.length > 0 && item.tags !== null) {
+            // this could be a item?.tags?.length or something?
+            allTags.push(item.tags)
           }
+          return
         })
 
         // At this point, we have an array of arrays. Let's flatten this sucker!
         // @ts-ignore
-        const flatTags = allTags.flat().filter((tag) => {
+        const flatTags = allTags.flat().filter(tag => {
           if (typeof tag !== "string") {
             return tag
           }
@@ -66,7 +68,7 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
           }
         }
 
-        setUniqueImageTags(uniqueTags)
+        setUniqueTags(uniqueTags)
       })
     }
 
@@ -85,16 +87,16 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
   }, [])
 
   // Here we handle change to the tags when this change does not involve creating a new tag
-  const handleChange = (value) => {
+  const handleChange = value => {
     // again, ensuring that `selected` remains an array
     setSelected(!value ? [] : value)
-    props.onChange(createPatchFrom(value))
+    props.onChange(createPatchFrom(!value ? [] : value))
   }
 
   /* 
   Ok, here's some fun: here we handle changes that involve creating new tags and populating these new options into selected tags and all tags
   */
-  const createOption = (inputValue) => {
+  const createOption = inputValue => {
     let newSelected = selected
     newSelected.push({ value: inputValue, label: inputValue })
     setSelected(newSelected)
@@ -102,7 +104,6 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
     // New tags need to be commited to Sanity so that we can reuse them elsewhere
     client
       .patch(props.document._id)
-      .setIfMissing({ [document]: { tags: [] } })
       .append(document, [{ value: inputValue, label: inputValue }])
       .commit()
       .then(() => props.onChange(createPatchFrom(newSelected)))
@@ -118,7 +119,7 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
         isMulti
         onChange={handleChange}
         onCreateOption={createOption}
-        options={uniqueImageTags || ""}
+        options={uniqueTags || ""}
       />
     </>
   )
