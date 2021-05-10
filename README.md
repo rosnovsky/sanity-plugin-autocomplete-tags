@@ -29,6 +29,14 @@ Whenever you want to add tags to an item in your schema, just add this snippet
   name: 'tags',
   title: 'Tags',
   type: 'tags',
+  options: {
+    //Locks menu from creating new tags (defaults to false)
+    frozen: true,
+    //Preset of tags (defaults to empty)
+    preload: [{label: "Oranges", value: "oranges"}, {label: "Apples", value: "apples"}],
+    //Closes menu after tag selected (defaults to true)
+    closeMenuOnSelect: true
+  }
 }
 ```
 
