@@ -53,7 +53,6 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
 
     const fetchTags = async () => {
       const allTags = await client.fetch(query, { document })
-      console.log(allTags)
 
         // Now, let's create a new array that only includes unique tags
         const uniqueTags = []
