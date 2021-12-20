@@ -49,30 +49,15 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
     setIsLoading(true)
 
     // Query for the document type and return the whole thing
-    const query = `*[_type == '${document}'] { ... }`
+    const query = `*[_type == $document && count(tags) > 0].tags[]`
 
     const fetchTags = async () => {
-      const allTags = [[...preloadedTags]]
-      client.fetch(query).then(items => {
-        items.forEach(item => {
-          if (item.tags && item.tags.length > 0 && item.tags !== null) {
-            // this could be a item?.tags?.length or something?
-            allTags.push(item.tags)
-          }
-          return
-        })
+      const allTags = await client.fetch(query, { document })
 
-        // At this point, we have an array of arrays. Let's flatten this sucker!
-        // @ts-ignore
-        const flatTags = allTags.flat().filter((tag) => {
-          if (typeof tag !== "string") {
-            return tag
-          }
-        })
         // Now, let's create a new array that only includes unique tags
         const uniqueTags = []
         const map = new Map()
-        for (const tag of flatTags) {
+        for (const tag of allTags) {
           if (!map.has(tag.value)) {
             map.set(tag.value, true)
             uniqueTags.push({
@@ -82,8 +67,7 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
           }
         }
 
-        setUniqueTags(uniqueTags)
-      })
+      setUniqueTags(uniqueTags)
     }
 
     // Ok, now let's populate the dropdown with tags already assigned.
