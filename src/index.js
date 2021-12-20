@@ -1,5 +1,5 @@
-import autocompleteTagsComponent from './components/autocompleteTagsComponent'
+import autocompleteTagsComponent from './components/autocompleteTagsComponent';
 export default {
   autocompleteTagsComponent,
   // settings (?)
-}
+};
