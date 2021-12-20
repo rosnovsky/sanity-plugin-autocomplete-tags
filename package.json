@@ -3,7 +3,12 @@
   "license": "MIT",
   "description": "Tags autocomplete plugin for Sanity Studio",
   "version": "1.0.1",
-  "author": "Art Rosnovsky <artem@rosnovsky.us>",
+  "author": "Art Rosnovsky <artem@rosnovsky.us> (https://rosnovsky.us)",
+  "homepage": "https://www.sanity.io/plugins/autocomplete-tags",
+  "contributors": [
+    "Sean Holbert (https://twitter.com/wildseansy)",
+    "Racheal Larimer <racheal.larimer@gmail.com> (https://github.com/rlpennell)"
+  ],
   "keywords": [
     "sanity",
     "sanity studio",
@@ -14,6 +19,7 @@
   "main": "build/index.js",
   "scripts": {
     "build": "babel src -d build --copy-files",
+    "dev": "babel src -d build --copy-files --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "npm run build"
   },
