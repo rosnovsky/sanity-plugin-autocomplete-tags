@@ -30,12 +30,14 @@ Whenever you want to add tags to an item in your schema, just add this snippet
   title: 'Tags',
   type: 'tags',
   options: {
-    //Locks menu from creating new tags (defaults to false)
+    // Locks menu from creating new tags (defaults to false)
     frozen: true,
-    //Preset of tags (defaults to empty)
+    // Preset of tags (defaults to empty)
     preload: [{label: "Oranges", value: "oranges"}, {label: "Apples", value: "apples"}],
-    //Closes menu after tag selected (defaults to true)
-    closeMenuOnSelect: true
+    // Closes menu after tag selected (defaults to true)
+    closeMenuOnSelect: true,
+    // Turns tag values into lower case slugs. Labels remain unchanged. Defaults to false. Tags created after enabling this option will remain slugified after you disable it.
+    slug: true,
   }
 }
 ```
