@@ -123,11 +123,14 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
   return (
     <Fieldset level={level} legend={type.title} description={type.description}>
       {frozen && preloadedTags.length === 0 ? <FrozenAndEmptyWarning /> : null}
-      {frozen ? (
-        <Select {...selectMenuProps} />
-      ) : (
-        <CreatableSelect {...selectMenuProps} />
-      )}
+      {/* Sanity's rich text editor has an "activate on click" "cover" with z-index of ~12. This means that if the autocomplete dropdown overlaps with the text editor, the autocomplete options will be behind the "click to activate". To fix this, we need to set the z-index of the autocomplete dropdown to > 12. The value of 20 below is arbitrary. */}
+      <div style={{ zIndex: 20 }}>
+        {frozen ? (
+          <Select {...selectMenuProps} />
+        ) : (
+          <CreatableSelect {...selectMenuProps} />
+        )}{' '}
+      </div>
     </Fieldset>
   );
 });
