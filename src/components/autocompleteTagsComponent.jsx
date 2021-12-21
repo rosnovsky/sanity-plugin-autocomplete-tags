@@ -13,6 +13,7 @@ import Fieldset from 'part:@sanity/components/fieldsets/default';
 import PatchEvent, { set, unset } from 'part:@sanity/form-builder/patch-event';
 import { withDocument } from 'part:@sanity/form-builder';
 import sanityClient from 'part:@sanity/base/client';
+import slugify from '../helpers/slugify';
 
 const client = sanityClient.withConfig({ apiVersion: '2021-03-25' });
 
@@ -34,8 +35,9 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
   const preloadedTags = options.preload || [];
   const closeMenuOnSelect = options.closeMenuOnSelect !== false;
   const frozen = options.frozen === true;
+  const slug = options.slug === true;
   const [uniqueTags, setUniqueTags] = useState(preloadedTags);
-  // TODO: This doesn't work, obviously :( Gotta fix it
+
   useImperativeHandle(ref, () => ({
     focus() {
       this._inputElement.focus();
@@ -50,7 +52,7 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
     // Component is loading! Hands off!
     setIsLoading(true);
 
-    // Query for the document type and return the whole thing
+    // Query for the document type and return all existing tags
     const query = `*[_type == $document && count(tags) > 0].tags[]`;
 
     const fetchTags = async () => {
@@ -63,7 +65,7 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
         if (!map.has(tag.value)) {
           map.set(tag.value, true);
           uniqueTags.push({
-            value: tag.value,
+            value: slug ? slugify(tag.value) : tag.value, // we need this to provide forwards compatibility: if your tags are not slugified yet, and you turn `slug` to `true`, they will be slugified here
             label: tag.label,
           });
         }
@@ -109,7 +111,10 @@ const autocompleteTagsComponent = forwardRef((props, ref) => {
   if (!frozen) {
     selectMenuProps.onCreateOption = (inputValue) => {
       const newSelected = selected;
-      newSelected.push({ value: inputValue, label: inputValue });
+      newSelected.push({
+        value: inputValue,
+        label: inputValue,
+      });
       setSelected(newSelected);
 
       // New tags need to be commited to Sanity so that we can reuse them elsewhere
