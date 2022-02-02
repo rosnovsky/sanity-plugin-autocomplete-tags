@@ -46,7 +46,7 @@
     "@babel/preset-env": "7.16.5",
     "@babel/preset-react": "7.16.5",
     "babel-eslint": "10.1.0",
-    "dotenv": "10.0.0"
+    "dotenv": "15.0.1"
   },
   "peerDependencies": {
     "@sanity/base": ">= 0.135.x",
