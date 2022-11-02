@@ -1,0 +1,36 @@
+{
+  "name": "sanity-studio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "package.json",
+  "author": "Art Rosnovsky <artem@rosnovsky.us>",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "sanity start",
+    "build": "sanity build"
+  },
+  "keywords": [
+    "sanity"
+  ],
+  "dependencies": {
+    "@sanity/base": "^2.35.0",
+    "@sanity/core": "^2.35.0",
+    "@sanity/default-layout": "^2.35.0",
+    "@sanity/default-login": "^2.35.0",
+    "@sanity/desk-tool": "^2.35.1",
+    "@sanity/eslint-config-studio": "^2.0.0",
+    "@sanity/google-maps-input": "^2.35.1",
+    "@sanity/vision": "^2.35.0",
+    "eslint": "^8.6.0",
+    "prop-types": "^15.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.6.0",
+    "sanity-plugin-autocomplete-tags": "*",
+    "styled-components": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.24"
+  }
+}

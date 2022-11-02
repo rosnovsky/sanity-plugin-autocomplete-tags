@@ -1,0 +1,31 @@
+{
+  "root": true,
+  "project": {
+    "name": "DSE Apps"
+  },
+  "api": {
+    "projectId": "76jo7qos",
+    "dataset": "apps"
+  },
+  "plugins": [
+    "@sanity/base",
+    "@sanity/default-layout",
+    "@sanity/default-login",
+    "@sanity/desk-tool",
+    "@sanity/google-maps-input",
+    "autocomplete-tags"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "@sanity/vision"
+      ]
+    }
+  },
+  "parts": [
+    {
+      "name": "part:@sanity/base/schema",
+      "path": "./schemas/schema"
+    }
+  ]
+}
