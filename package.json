@@ -1,21 +1,25 @@
 {
-  "name": "turborepo-basic",
+  "name": "sanity-plugin-autocomplete-tags",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "docs",
     "apps/*",
-    "ui",
-    "config",
-    "tsconfig",
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo run dev --parallel",
-    "build": "turbo run build --parallel"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "prettier": "^2.5.1",
-    "turbo": "^1.6.3"
-  }
+    "eslint-config-custom": "workspace:*",
+    "prettier": "latest",
+    "turbo": "latest"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {},
+  "packageManager": "pnpm@7.26.2"
 }
