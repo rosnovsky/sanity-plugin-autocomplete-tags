@@ -1,5 +1,7 @@
 # Sanity Autocomplete Tags Dropdown Plugin 🚀
 
+## In the process of migration to Sanity Studio 3 ([#44](https://github.com/rosnovsky/sanity-plugin-autocomplete-tags/issues/44))
+
 This plugin creates a custom tags input field for Sanity Studio. This custom input field allows users to type tags, select existing ones from the dropdown or create new ones. This is handy if you want to offer authors an experience of "type, hit Enter, repeat" for adding tags.
 
 ![Plugin screenshot](https://s3.us-west-1.wasabisys.com/rosnovsky-media/screenshot.png)
