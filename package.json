@@ -33,7 +33,7 @@
   "dependencies": {
     "@babel/plugin-transform-react-jsx": "^7.10.4",
     "@babel/runtime": "^7.6.2",
-    "@sanity/client": "^2.0.1",
+    "@sanity/client": "^6.0.0",
     "react": "^17.0.0",
     "react-select": "^5.0.0",
     "webpack": "^5.1.0"
